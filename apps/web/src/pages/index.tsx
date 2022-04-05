@@ -34,7 +34,8 @@ interface Props {
 const Home: NextPage<Props> = ({ jobs }) => {
   return (
     <section>
-      <h2>Home</h2>
+      <h1>Home</h1>
+
       {jobs.map((job) => (
         <JobPost job={job} key={job.id} />
       ))}

@@ -12,7 +12,7 @@ const JobPost = ({ job }: Props) => {
     <Link href={`/${job.company.slug}/${job.slug}`}>
       <a>
         <div>
-          <h3>{job.title}</h3>
+          <h2>{job.title}</h2>
 
           {job.slug}
 

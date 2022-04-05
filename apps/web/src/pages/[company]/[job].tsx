@@ -1,8 +1,12 @@
 import React from "react";
+import type { NextPage } from "next";
 
 import { gql } from "@apollo/client";
+import ReactMarkdown from "react-markdown";
 
 import client from "@/lib/apolloClient";
+
+import type { Job } from "@/types/job";
 
 const QUERY = gql`
   query Job($jobSlug: String!, $companySlug: String!) {
@@ -22,12 +26,16 @@ const QUERY = gql`
   }
 `;
 
-const Job = ({ job }) => {
+interface Props {
+  job: Job;
+}
+
+const Job: NextPage<Props> = ({ job }) => {
   return (
     <section>
-      <code>
-        <pre>{JSON.stringify(job, null, 2)}</pre>
-      </code>
+      <h1>{job.title}</h1>
+
+      <ReactMarkdown>{job.description}</ReactMarkdown>
     </section>
   );
 };
