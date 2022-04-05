@@ -1,18 +1,41 @@
+import Head from "next/head";
+
 import type { AppProps } from "next/app";
 
 import { ApolloProvider } from "@apollo/client";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import { CssBaseline } from "@mui/material";
 
-import client from "../lib/apolloClient";
+import client from "@/lib/apolloClient";
+import createEmotionCache from "@/lib/createEmotionCache";
 
-import "../styles/globals.css";
+const clientSideEmotionCache = createEmotionCache();
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
+}
+
+const MyApp = ({
+  Component,
+  pageProps,
+  emotionCache = clientSideEmotionCache,
+}: MyAppProps) => {
   return (
-    <ApolloProvider client={client}>
-      <main>
-        <Component {...pageProps} />
-      </main>
-    </ApolloProvider>
+    <>
+      <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
+
+      <ApolloProvider client={client}>
+        <CacheProvider value={emotionCache}>
+          <CssBaseline />
+
+          <main>
+            <Component {...pageProps} />
+          </main>
+        </CacheProvider>
+      </ApolloProvider>
+    </>
   );
 };
 
