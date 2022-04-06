@@ -2,49 +2,22 @@ import React from "react";
 
 import type { NextPage } from "next";
 
-import { gql } from "@apollo/client";
-
+import { GET_JOBS } from "@/graphql/queries";
 import client from "@/lib/apolloClient";
-import JobPost from "@/components/JobPosts";
+import HomePage from "@/modules/HomePage/HomePage";
 
 import type { Job } from "@/types/job";
-
-const QUERY = gql`
-  query Jobs {
-    jobs {
-      id
-      title
-      description
-      slug
-      company {
-        id
-        name
-        websiteUrl
-        slug
-      }
-      isPublished
-    }
-  }
-`;
 
 interface Props {
   jobs: Job[];
 }
 
 const Home: NextPage<Props> = ({ jobs }) => {
-  return (
-    <section>
-      <h1>Home</h1>
-
-      {jobs.map((job) => (
-        <JobPost job={job} key={job.id} />
-      ))}
-    </section>
-  );
+  return <HomePage jobs={jobs} />;
 };
 
 export const getServerSideProps = async () => {
-  const { data } = await client.query({ query: QUERY });
+  const { data } = await client.query({ query: GET_JOBS });
 
   return { props: { jobs: data.jobs } };
 };
