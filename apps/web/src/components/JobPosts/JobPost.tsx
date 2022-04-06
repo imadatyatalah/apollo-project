@@ -13,12 +13,6 @@ const JobPost = ({ job }: Props) => {
       <a>
         <div>
           <h2>{job.title}</h2>
-
-          {job.slug}
-
-          <br />
-
-          {job.company.slug}
         </div>
       </a>
     </Link>

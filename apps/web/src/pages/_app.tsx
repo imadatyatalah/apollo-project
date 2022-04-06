@@ -4,10 +4,13 @@ import type { AppProps } from "next/app";
 
 import { ApolloProvider } from "@apollo/client";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import client from "@/lib/apolloClient";
 import createEmotionCache from "@/lib/createEmotionCache";
+import theme from "@/lib/theme";
+
+import "@/styles/globals.css";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -28,11 +31,13 @@ const MyApp = ({
 
       <ApolloProvider client={client}>
         <CacheProvider value={emotionCache}>
-          <CssBaseline />
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
 
-          <main>
-            <Component {...pageProps} />
-          </main>
+            <main>
+              <Component {...pageProps} />
+            </main>
+          </ThemeProvider>
         </CacheProvider>
       </ApolloProvider>
     </>
