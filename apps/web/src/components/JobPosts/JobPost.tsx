@@ -1,8 +1,6 @@
 import React from "react";
 import Link from "next/link";
 
-import { Box, Typography } from "@mui/material";
-
 import type { Job } from "@/types/job";
 
 interface Props {
@@ -11,15 +9,13 @@ interface Props {
 
 const JobPost = ({ job }: Props) => {
   return (
-    <Box my={2}>
+    <div>
       <Link href={`/${job.company.slug}/${job.slug}`}>
         <a>
-          <Typography variant="h5" component="h2" fontWeight={700}>
-            {job.title}
-          </Typography>
+          <p>{job.title}</p>
         </a>
       </Link>
-    </Box>
+    </div>
   );
 };
 
