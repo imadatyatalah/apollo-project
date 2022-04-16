@@ -1,3 +1,11 @@
-export interface Context {}
+import { PrismaClient } from "@prisma/client";
 
-export const context: Context = {};
+const prisma = new PrismaClient();
+
+export interface Context {
+  prisma: PrismaClient;
+}
+
+export const context: Context = {
+  prisma: prisma,
+};

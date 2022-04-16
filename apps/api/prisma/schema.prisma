@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id Int @id @default(autoincrement())
+
+  name           String @map("full_name")
+  employeeHandle String @unique @map("employee_handle")
+  email          String @unique
+  password       String
+
+  isEmailVerified Boolean @default(false) @map("is_email_verified")
+  isBanned        Boolean @default(false) @map("is_banned")
+
+  profile Profile?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("employees")
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+
+  bio          String?
+  location     String?
+  website      String?
+  position     String?
+  profileImage String? @map("profile_image")
+
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  employeeId Int      @unique
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("profiles")
+}
+
+model Company {
+  id Int @id @default(autoincrement())
+
+  name          String
+  companyHandle String @unique @map("company_handle")
+  email         String @unique
+  passwoed      String
+
+  @@map("companies")
+}

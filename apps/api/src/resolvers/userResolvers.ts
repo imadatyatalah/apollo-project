@@ -1,7 +1,20 @@
 import { Context } from "../context";
 
 export const userResolvers = {
-  userByUsername: (parent, args, context: Context, info) => {
-    return null;
+  employeeByHandle: (_parent, args: { handle: string }, context: Context) => {
+    return context.prisma.employee.findUnique({
+      where: { employeeHandle: args.handle },
+      include: {
+        profile: {
+          select: {
+            bio: true,
+            location: true,
+            website: true,
+            position: true,
+            profileImage: true,
+          },
+        },
+      },
+    });
   },
 };
